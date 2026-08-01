@@ -5,7 +5,7 @@ variable "tags" {
 
 variable "redis_capacity" {
   description = "..."
-  type        = string
+  type        = number
 }
 
 variable "redis_sku" {

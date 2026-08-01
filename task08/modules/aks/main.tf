@@ -17,6 +17,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count   = var.instance_count
     vm_size      = var.node_size
     os_disk_type = var.os_disk_type
+    # Explicitly set the OS disk size.
+    # Azure defaults to 128 GB, which causes validation issues
+    # for some VM sizes with Ephemeral OS disks.
+    os_disk_size_gb = 30
   }
   # видаляється разом з ресурсом, може бути UserAssigned але задача цього не просить)
   identity {

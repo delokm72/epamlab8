@@ -20,7 +20,7 @@ resource "azurerm_container_registry_task" "task" {
     dockerfile_path = var.dockerfile_path
     image_names     = ["${var.docker_image_name}:latest"]
     # Git Personal Access Token
-    context_access_token = var.git_pat
+    context_access_token = var.git_pat != "" ? var.git_pat : null
   }
 }
 

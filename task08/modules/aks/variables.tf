@@ -26,9 +26,9 @@ variable "node_size" {
 }
 
 variable "instance_count" {
-  type        = string
+  type        = number
   description = "..."
-  default     = "1"
+  default     = 1
 }
 
 variable "node_pool_name" {
