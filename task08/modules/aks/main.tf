@@ -69,12 +69,14 @@ resource "azurerm_key_vault_access_policy" "ask_policy" {
   # До цього Key Vault буде додано політику доступу.
   # Передається з модуля Key Vault через output "id".
   key_vault_id = var.key_vault_id
-  # Secrets Store CSI Driver використовує цю identity
-  # для читання секретів з Azure Key Vault.
-  # Identity створюється Azure автоматично разом із кластером,
-  # тому Terraform отримує її зі створеного ресурсу AKS.
-  # значення ідентичне principal_id в "assigment"
-  object_id = azurerm_kubernetes_cluster.aks.kubelet_identity[0].object_id
+  # Secrets Store CSI Driver uses its own managed identity
+  # to read secrets directly from Azure Key Vault.
+  # This identity is created automatically when the AKS cluster
+  # is provisioned with the Key Vault Secrets Provider enabled.
+  # Do NOT use kubelet_identity here - the CSI Driver authenticates
+  # with secret_identity, so the access policy must be granted
+  # to secret_identity.object_id.
+  object_id = azurerm_kubernetes_cluster.aks.key_vault_secrets_provider[0].secret_identity[0].object_id
   # Microsoft Entra ID (Azure Active Directory) Tenant ID.
   # Determines in which tenant the Managed Identity exists.
   # Obtained from the currently authenticated Azure account.
@@ -86,3 +88,4 @@ resource "azurerm_key_vault_access_policy" "ask_policy" {
 }
 
 
+secret_identity.object_id
