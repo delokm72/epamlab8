@@ -49,6 +49,6 @@ variable "tags" {
 }
 
 variable "kv_policy_id" {
-  description = "Tags applied to all Azure resources"
-  type        = map(string)
+  type        = string
+  description = "..."
 }
