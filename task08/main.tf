@@ -52,21 +52,6 @@ module "aks" {
   name         = local.aks_name
   rg_name      = azurerm_resource_group.rg.name
 }
-# Read Redis hostname from Key Vault.
-# The secret was created by the Redis module.
-data "azurerm_key_vault_secret" "redis_hostname" {
-  name         = var.redis_secret_hostname
-  key_vault_id = module.keyvault.id
-  depends_on = [
-    module.redis
-  ]
-}
-# Read Redis primary access key from Key Vault.
-# The secret was created by the Redis module.
-data "azurerm_key_vault_secret" "redis_primary_key" {
-  name         = var.redis_primary_key_secret_name
-  key_vault_id = module.keyvault.id
-}
 
 module "aci" {
   source            = "./modules/aci"
@@ -74,8 +59,8 @@ module "aci" {
   name              = local.aci_name
   rg_name           = azurerm_resource_group.rg.name
   image             = module.acr.image
-  redis_url         = data.azurerm_key_vault_secret.redis_hostname.value
-  redis_password    = data.azurerm_key_vault_secret.redis_primary_key.value
+  redis_url         = module.redis.hostname
+  redis_password    = module.redis.primary_access_key
   registry_server   = module.acr.acr_login_server
   registry_username = module.acr.admin_username
   registry_password = module.acr.admin_password
@@ -101,8 +86,8 @@ resource "kubectl_manifest" "secret_provider" {
       # передаємо значення всіх змінних які є в файлі, їх формат ${
       aks_kv_access_identity_id  = module.aks.kv_secret_identity_client_id
       kv_name                    = local.akv_name
-      redis_url_secret_name      = data.azurerm_key_vault_secret.redis_hostname.value
-      redis_password_secret_name = data.azurerm_key_vault_secret.redis_primary_key.value
+      redis_url_secret_name      = module.redis.hostname
+      redis_password_secret_name = module.redis.primary_access_key
       tenant_id                  = module.keyvault.tenant_id
     }
   )
