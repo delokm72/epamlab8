@@ -64,6 +64,9 @@ module "aci" {
   registry_server   = module.acr.acr_login_server
   registry_username = module.acr.admin_username
   registry_password = module.acr.admin_password
+  depends_on = [
+    module.acr
+  ]
 }
 # опиано в versions.tf
 provider "kubectl" {
