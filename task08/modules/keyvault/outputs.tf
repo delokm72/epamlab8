@@ -12,3 +12,7 @@ output "tenant_id" {
   description = "..."
   value       = data.azurerm_client_config.current.tenant_id
 }
+
+output "policy_id" {
+  value = azurerm_key_vault_access_policy.kv_policy.id
+}

@@ -7,11 +7,11 @@ variable "acr_name" {
   type        = string
   description = "..."
 }
-
+# 5 length min!
 variable "task_name" {
   type        = string
   description = "..."
-  default     = "omur"
+  default     = "Omur1"
 }
 
 variable "tags" {

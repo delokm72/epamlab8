@@ -25,6 +25,10 @@ module "redis" {
   rg_name         = azurerm_resource_group.rg.name
   sku             = var.redis_sku
   tags            = var.tags
+  kv_policy_id    = module.keyvault.policy_id
+  depends_on = [
+    module.keyvault
+  ]
 }
 
 module "acr" {
@@ -53,6 +57,9 @@ module "aks" {
 data "azurerm_key_vault_secret" "redis_hostname" {
   name         = var.redis_secret_hostname
   key_vault_id = module.keyvault.id
+  depends_on = [
+    module.redis
+  ]
 }
 # Read Redis primary access key from Key Vault.
 # The secret was created by the Redis module.

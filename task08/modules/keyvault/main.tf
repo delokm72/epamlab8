@@ -11,6 +11,16 @@ resource "azurerm_key_vault_access_policy" "kv_policy" {
   key_vault_id = azurerm_key_vault.kv.id
   object_id    = data.azurerm_client_config.current.object_id
   tenant_id    = data.azurerm_client_config.current.tenant_id
+  secret_permissions = [
+    "Get",
+    "List",
+    "Set",
+    "Delete",
+    "Recover",
+    "Backup",
+    "Restore",
+    "Purge"
+  ]
 }
 
 # to get ids of logged user, !!!call with data.

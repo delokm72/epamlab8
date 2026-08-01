@@ -14,10 +14,17 @@ resource "azurerm_key_vault_secret" "stored_redis_hostname" {
   name         = var.secret_hostname
   value        = azurerm_redis_cache.redis.hostname
   key_vault_id = var.key_vault_id
+  depends_on = [
+    var.kv_policy_id
+  ]
 }
 
 resource "azurerm_key_vault_secret" "stored_redis_access_key" {
   name         = var.secret_key
   value        = azurerm_redis_cache.redis.primary_access_key
   key_vault_id = var.key_vault_id
+  depends_on = [
+    # це по суті azurerm_key_vault_access_policy.kv_policy.id
+    var.kv_policy_id
+  ]
 }
