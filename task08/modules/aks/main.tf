@@ -12,6 +12,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.name
   resource_group_name = var.rg_name
   dns_prefix          = var.name
+  # Keep the OIDC issuer enabled.
+  # Once enabled in AKS, Azure does not allow it to be disabled.
+  # Without this setting Terraform attempts to change it to null,
+  # resulting in the "OIDCIssuerFeatureCannotBeDisabled" error.
+  oidc_issuer_enabled = true
   default_node_pool {
     name         = var.node_pool_name
     node_count   = var.instance_count
