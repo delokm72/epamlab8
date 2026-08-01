@@ -12,6 +12,7 @@ resource "azurerm_redis_cache" "redis" {
 
 resource "azurerm_key_vault_secret" "stored_redis_hostname" {
   name         = var.secret_hostname
+  # генерується в редіс і записується тут
   value        = azurerm_redis_cache.redis.hostname
   key_vault_id = var.key_vault_id
   depends_on = [
@@ -21,6 +22,7 @@ resource "azurerm_key_vault_secret" "stored_redis_hostname" {
 
 resource "azurerm_key_vault_secret" "stored_redis_access_key" {
   name         = var.secret_key
+  # генерується в редіс і записується тут
   value        = azurerm_redis_cache.redis.primary_access_key
   key_vault_id = var.key_vault_id
   depends_on = [
