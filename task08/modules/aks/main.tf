@@ -86,6 +86,3 @@ resource "azurerm_key_vault_access_policy" "ask_policy" {
     "List"
   ]
 }
-
-
-secret_identity.object_id
