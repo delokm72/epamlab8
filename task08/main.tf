@@ -87,8 +87,8 @@ resource "kubectl_manifest" "secret_provider" {
     "${path.module}/k8s-manifests/secret-provider.yaml.tftpl",
     {
       # передаємо значення всіх змінних які є в файлі, їх формат ${
-      aks_kv_access_identity_id  = module.aks.kv_secret_identity_client_id
-      kv_name                    = local.akv_name
+      aks_kv_access_identity_id = module.aks.kv_secret_identity_client_id
+      kv_name                   = local.akv_name
       # тут передаються ІМЯ секретів а не значення як в module "aci"
       redis_url_secret_name      = var.redis_secret_hostname
       redis_password_secret_name = var.redis_primary_key_secret_name
@@ -137,4 +137,13 @@ resource "kubectl_manifest" "service" {
       value_type = "regex"
     }
   }
+}
+
+data "kubernetes_service" "app" {
+  metadata {
+    name = "redis-flask-app-service"
+  }
+  depends_on = [
+    kubectl_manifest.service
+  ]
 }
