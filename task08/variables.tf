@@ -64,6 +64,7 @@ variable "acr_dockerfile_path" {
 }
 
 variable "git_pat" {
-  type      = string
-  sensitive = true
+  description = "..."
+  type        = string
+  sensitive   = true
 }

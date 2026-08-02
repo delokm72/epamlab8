@@ -7,7 +7,7 @@ resource "azurerm_resource_group" "rg" {
 module "keyvault" {
   source              = "./modules/keyvault"
   location            = var.location
-  name                = local.akv_name
+  name                = local.keyvault_name
   resource_group_name = azurerm_resource_group.rg.name
   sku_name            = var.kv_sku
   tags                = var.tags
@@ -88,7 +88,7 @@ resource "kubectl_manifest" "secret_provider" {
     {
       # передаємо значення всіх змінних які є в файлі, їх формат ${
       aks_kv_access_identity_id = module.aks.kv_secret_identity_client_id
-      kv_name                   = local.akv_name
+      kv_name                   = local.keyvault_name
       # тут передаються ІМЯ секретів а не значення як в module "aci"
       redis_url_secret_name      = var.redis_secret_hostname
       redis_password_secret_name = var.redis_primary_key_secret_name
