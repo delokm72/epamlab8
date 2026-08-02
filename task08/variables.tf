@@ -70,5 +70,6 @@ variable "git_pat" {
 }
 
 variable "name_prefix" {
-  type = string
+  description = "..."
+  type        = string
 }
