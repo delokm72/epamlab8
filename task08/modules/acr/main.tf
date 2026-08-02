@@ -7,6 +7,7 @@ resource "azurerm_container_registry" "acr" {
   # ACI uses image_registry_credential to pull images from ACR.
   # This account provides the username and password required for authentication.
   admin_enabled = true
+  tags          = var.tags
 }
 
 resource "azurerm_container_registry_task" "task" {

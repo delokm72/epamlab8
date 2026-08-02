@@ -68,3 +68,7 @@ variable "git_pat" {
   type        = string
   sensitive   = true
 }
+
+variable "name_prefix" {
+  type = string
+}

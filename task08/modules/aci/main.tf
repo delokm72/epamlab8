@@ -39,4 +39,5 @@ resource "azurerm_container_group" "container" {
       REDIS_PWD = var.redis_password
     }
   }
+  tags = var.tags
 }

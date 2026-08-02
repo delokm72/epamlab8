@@ -51,6 +51,7 @@ module "aks" {
   location     = azurerm_resource_group.rg.location
   name         = local.aks_name
   rg_name      = azurerm_resource_group.rg.name
+  tags         = var.tags
 }
 
 module "aci" {
@@ -64,6 +65,7 @@ module "aci" {
   registry_server   = module.acr.acr_login_server
   registry_username = module.acr.admin_username
   registry_password = module.acr.admin_password
+  tags              = var.tags
   depends_on = [
     module.acr
   ]

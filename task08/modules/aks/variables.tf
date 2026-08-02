@@ -48,3 +48,8 @@ variable "key_vault_id" {
   description = "..."
   default     = "system"
 }
+
+variable "tags" {
+  description = "Tags applied to all Azure resources"
+  type        = map(string)
+}

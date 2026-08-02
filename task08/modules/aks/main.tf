@@ -36,6 +36,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     # Це дозволяє драйверу автоматично оновлювати секрети, якщо вони зміняться в Key Vault.
     secret_rotation_enabled = true
   }
+  tags = var.tags
 }
 
 # Дати AKS право читати ACR

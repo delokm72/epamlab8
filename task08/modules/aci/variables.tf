@@ -48,3 +48,8 @@ variable "registry_password" {
   type        = string
   description = "..."
 }
+
+variable "tags" {
+  description = "Tags applied to all Azure resources"
+  type        = map(string)
+}
