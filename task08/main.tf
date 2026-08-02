@@ -95,6 +95,9 @@ resource "kubectl_manifest" "secret_provider" {
       tenant_id                  = module.keyvault.tenant_id
     }
   )
+  depends_on = [
+    module.redis
+  ]
 }
 
 # Create Kubernetes Deployment for the application.
@@ -112,7 +115,8 @@ resource "kubectl_manifest" "deployment" {
     }
   )
   depends_on = [
-    kubectl_manifest.secret_provider
+    kubectl_manifest.secret_provider,
+    module.redis
   ]
   wait_for {
     field {

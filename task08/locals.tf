@@ -6,6 +6,5 @@ locals {
   acr_image_name = "${local.name_prefix}-app"
   aci_name       = "${local.name_prefix}-ci"
   aks_name       = "${local.name_prefix}-aks"
-
-  acr_name = "cmtr53z813yemod8cr"
+  acr_name       = "cmtr53z813yemod8cr"
 }
